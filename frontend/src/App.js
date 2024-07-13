@@ -1,30 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import DataFetcher from './components/DataFetcher';
+import ProfilePage from './components/ProfilePage';
 
 function App() {
-  return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-        <main>
-          <DataFetcher />
-        </main>
-      </div>
-  );
+    return (
+        <div className="App">
+            <main>
+                <ProfilePage />
+                <DataFetcher />
+            </main>
+        </div>
+    );
 }
 
 export default App;
