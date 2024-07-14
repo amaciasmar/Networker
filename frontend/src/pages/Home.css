@@ -1,0 +1,63 @@
+.home {
+    padding: 20px;
+}
+
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.search-bar {
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.sign-in, .sign-up {
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+
+.home-menu {
+    display: flex;
+}
+
+.menu-button {
+    padding: 5px 10px;
+    margin-left: 10px;
+}
+
+.intro-section {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.card-section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    width: 200px;
+    text-align: center;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.card .learn-more {
+    padding: 5px 10px;
+    margin-top: 10px;
+}
