@@ -36,3 +36,57 @@
     transform: rotate(360deg);
   }
 }
+
+/* New styles for ProfilePage and its components */
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
+
+.message-button {
+  align-self: center;
+  padding: 10px 20px;
+  background-color: #61dafb;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}
+
+.message-button:hover {
+  background-color: #21a1f1;
+}
+
+.profile-content {
+  width: 80%;
+  text-align: left;
+}
+
+.summary, .endorsements, .employment-history, .schedule {
+  margin: 20px 0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+.endorsements h2, .employment-history h2 {
+  margin-top: 0;
+}
+
