@@ -80,10 +80,10 @@ app.get('/', (req, res) => {
       if (error) {
         throw error
       }
-      count = results.rows[0].count
+      count = results.rows[0].count-9
       console.log(count);
     })
-    let id = Math.floor(Math.random((count-1)+1))
+    let id = Math.floor(Math.random()*(count-1))+1
     for (let i = 0; i <= id + 9; i++) {
     con.query('SELECT first_name, last_name, mentor, mentee, education, location, meeting_preference FROM app_user where user_id = $1', [id+i], (error, results) => {
         if (error) {
@@ -113,10 +113,10 @@ app.get('/search/mentees', (req, res) => {
       if (error) {
         throw error
       }
-      count = results.rows[0].count
+      count = results.rows[0].count-9
       console.log(count);
     })
-    let id = Math.floor(Math.random((count-1)+1))
+    let id = Math.floor(Math.random()*(count-1))+1
     for(let i = 0; i < count; i++) {
       let employment_query = 'SELECT company, position FROM employment_history where employment_history_id = SELECT employment_history_id From user_employment_history where user_id = ' + (id+i)
       if(info.search == 'A-Z'){
@@ -158,10 +158,10 @@ app.get('/search/mentors', (req, res) => {
       if (error) {
         throw error
       }
-      count = results.rows[0].count
+      count = results.rows[0].count-9
       console.log(count);
     })
-    let id = Math.floor(Math.random((count-1)+1))
+    let id = Math.floor(Math.random()*(count-1))+1
     for (let i = 0; i < count; i++) {
       let employment_query = 'SELECT company, position FROM employment_history where employment_history_id = SELECT employment_history_id From user_employment_history where user_id = ' + (id + i)
         if(info.search == 'A-Z'){
