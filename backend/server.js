@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     res.send('Hello from the backend!');
 });
 
-//for login functionality
+//API post request for login
 app.post('/login', (req, res) => {
     const info = JSON.parse(req.body);
     con.query('SELECT * FROM app_user where lower(password)=%s AND lower(username) = %s', info.password.toLowerCase(), info.username.toLowerCase(), (error, results) => {
@@ -28,7 +28,7 @@ app.post('/login', (req, res) => {
   })
 })
 
-//for sign up functionality
+//API post request for sign up
 app.post('/sign_up', (req, res) => {
     const info = JSON.parse(req.body);
     let sign_up_query = 'insert into app_user(username, password, email, first_name, last_name, summary, phone_number, mentor, mentee, education, location, meeting_preference) values (%s, %s, %s, %s, %s, %s, %d, %b, %b, %s, %s, %s)' % (info.username, info.password, info.email, info.first_name, info.last_name, info.summary, info.phone_number, info.mentor, info.mentee, info.education, info.location, info.meeting_preference)
@@ -40,7 +40,7 @@ app.post('/sign_up', (req, res) => {
     })
 })
 
-//gets all of user's info for profile
+//sends frontend all the the information needed for the profile page.
 app.get('/profile/:id', (req, res) => {
     const id = parseInt(req.params.id)
     con.query('SELECT email, first_name, last_name, summary, education, location, meeting_preference FROM app_user where user_id = $1', [id], (error, results) => {
@@ -70,7 +70,8 @@ con.query('SELECT company, position FROM employment_history WHERE employment_his
 })
 })
 
-//home page
+//returns all the information needed for the home page
+//which is information about 9 random users
 app.get('/', (req, res) => {
   const info = JSON.parse(req.body);
     let employment_query = 'SELECT company, position FROM employment_history where employment_history_id = SELECT employment_history_id From user_employment_history where user_id = $1'
@@ -81,7 +82,6 @@ app.get('/', (req, res) => {
         throw error
       }
       count = results.rows[0].count-9
-      console.log(count);
     })
     let id = Math.floor(Math.random()*(count-1))+1
     for (let i = 0; i <= id + 9; i++) {
@@ -105,7 +105,8 @@ app.get('/', (req, res) => {
     }
 })
 
-//only mentees
+//Displays 9 random users that have signed up to be mentees
+//This function is used wehn mentee button is pressed
 app.get('/search/mentees', (req, res) => {
     const info = JSON.parse(req.body);
       let count = 0;
@@ -114,10 +115,9 @@ app.get('/search/mentees', (req, res) => {
         throw error
       }
       count = results.rows[0].count-9
-      console.log(count);
     })
     let id = Math.floor(Math.random()*(count-1))+1
-    for(let i = 0; i < count; i++) {
+    for(let i = 0; i < id+9; i++) {
       let employment_query = 'SELECT company, position FROM employment_history where employment_history_id = SELECT employment_history_id From user_employment_history where user_id = ' + (id+i)
       if(info.search == 'A-Z'){
       con.query('SELECT first_name, last_name, mentor, mentee, education, location, meeting_preference FROM app_user where user_id = $1 AND mentee = true ORDER BY last_name ASC', [id+i], (error, results) => {
@@ -150,7 +150,8 @@ app.get('/search/mentees', (req, res) => {
       }
 })
 
-//only mentors
+//Displays 9 random users that have signed up to be mentors
+//this function is used when mentor button is pressed
 app.get('/search/mentors', (req, res) => {
   const info = JSON.parse(req.body);
     let count = 0;
@@ -162,7 +163,7 @@ app.get('/search/mentors', (req, res) => {
       console.log(count);
     })
     let id = Math.floor(Math.random()*(count-1))+1
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < id+9; i++) {
       let employment_query = 'SELECT company, position FROM employment_history where employment_history_id = SELECT employment_history_id From user_employment_history where user_id = ' + (id + i)
         if(info.search == 'A-Z'){
         con.query('SELECT first_name, last_name, mentor, mentee, education, location, meeting_preference FROM app_user where user_id = $1 AND mentor = true ORDER BY last_name ASC', [(id + i)], (error, results) => {
@@ -195,7 +196,8 @@ app.get('/search/mentors', (req, res) => {
         
     })
 
-//searching
+//below is a set of functions that will provide the results for a user using the search bar.
+//this function will return information when a person's name is searched
 function person_card(req, res) {
   const id = parseInt(req.params.id)
     con.query('SELECT first_name, last_name, summary, education, location, meeting_preference FROM app_user where user_id = $1', [id], (error, results) => {
@@ -218,14 +220,14 @@ function person_card(req, res) {
     res.status(200).json(results.rows)
   })
   */
-con.query('SELECT company, position FROM employment_history WHERE employment_history_id = SELECT employment_history_id FROM user_employment_history where user_id = $1', [id], (error, results) => {
-  if (error) {
-    throw error
-  }
-  res.status(200).json(results.rows)
+  con.query('SELECT company, position FROM employment_history WHERE employment_history_id = SELECT employment_history_id FROM user_employment_history where user_id = $1', [id], (error, results) => {
+    if (error) {
+      throw error
+    }
+    res.status(200).json(results.rows)
   })
 };
-
+//This function will return information on a discussion group when discussion groups are searched
 function group_card(){
   const id = parseInt(req.params.id)
 
@@ -235,7 +237,7 @@ function topic_card() {
   
 }
 
-//Search bar searching
+//Search bar results function
 function search_bar() {
   search_query = 'SELECT email, first_name, last_name, summary, education, location, meeting_preference FROM app_user'
 }
